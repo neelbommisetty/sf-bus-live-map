@@ -1,1 +1,105 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  /* background-color: #c7dae7; */
+}
+
+/* Space out content a bit */
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.map-holder {
+  height: 100%;
+}
+
+.streets, .freeways, .arteries, .neighborhoods {
+    fill: none;
+    stroke-linejoin: round;
+}
+
+.streets.streets {
+    stroke: #80b1d3;
+    stroke-width: 1px;
+}
+
+.freeways.streets {
+    stroke: #80b1d3;
+    stroke-width: 1px;
+}
+
+.arteries.streets {
+    stroke: #80b1d3;
+    stroke-width: 1px;
+}
+
+.neighborhoods.streets {
+    stroke: #80b1d3;
+    stroke-width: 1px;
+}
+
+.streets.freeways {
+    stroke: #ff7f00;
+    stroke-width: 4px;
+}
+
+.freeways.freeways {
+    stroke: #ff7f00;
+    stroke-width: 4px;
+}
+
+.arteries.freeways {
+    stroke: #ff7f00;
+    stroke-width: 4px;
+}
+
+.neighborhoods.freeways {
+    stroke: #ff7f00;
+    stroke-width: 4px;
+}
+
+.streets.arteries {
+    stroke: #984ea3;
+    stroke-width: 2px;
+}
+
+.freeways.arteries {
+    stroke: #984ea3;
+    stroke-width: 2px;
+}
+
+.arteries.arteries {
+    stroke: #984ea3;
+    stroke-width: 2px;
+}
+
+.neighborhoods.arteries {
+    stroke: #984ea3;
+    stroke-width: 2px;
+}
+
+.streets.neighborhoods {
+    stroke: #4daf4a;
+    stroke-width: 2px;
+}
+
+.freeways.neighborhoods {
+    stroke: #4daf4a;
+    stroke-width: 2px;
+}
+
+.arteries.neighborhoods {
+    stroke: #4daf4a;
+    stroke-width: 2px;
+}
+
+.neighborhoods.neighborhoods {
+    stroke: #4daf4a;
+    stroke-width: 2px;
+}
