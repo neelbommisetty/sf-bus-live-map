@@ -1,10 +1,13 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   /* background-color: #c7dae7; */
 }
@@ -16,90 +19,33 @@ body {
 }
 
 .map-holder {
+  background-color: #ffffff;
   height: 100%;
 }
 
-.streets, .freeways, .arteries, .neighborhoods {
-    fill: none;
-    stroke-linejoin: round;
+.streets,
+.freeways,
+.arteries,
+.neighborhoods {
+  fill: none;
+  stroke-linejoin: round;
 }
 
-.streets.streets {
-    stroke: #80b1d3;
-    stroke-width: 1px;
+.streets {
+  stroke: #bdc9e1;
+  stroke-width: 1px;
 }
 
-.freeways.streets {
-    stroke: #80b1d3;
-    stroke-width: 1px;
+.freeways {
+  stroke: #74a9cf;
+  stroke-width: 4px;
 }
 
-.arteries.streets {
-    stroke: #80b1d3;
-    stroke-width: 1px;
+.arteries {
+  stroke: #2b8cbe;
+  stroke-width: 2px;
 }
-
-.neighborhoods.streets {
-    stroke: #80b1d3;
-    stroke-width: 1px;
-}
-
-.streets.freeways {
-    stroke: #ff7f00;
-    stroke-width: 4px;
-}
-
-.freeways.freeways {
-    stroke: #ff7f00;
-    stroke-width: 4px;
-}
-
-.arteries.freeways {
-    stroke: #ff7f00;
-    stroke-width: 4px;
-}
-
-.neighborhoods.freeways {
-    stroke: #ff7f00;
-    stroke-width: 4px;
-}
-
-.streets.arteries {
-    stroke: #984ea3;
-    stroke-width: 2px;
-}
-
-.freeways.arteries {
-    stroke: #984ea3;
-    stroke-width: 2px;
-}
-
-.arteries.arteries {
-    stroke: #984ea3;
-    stroke-width: 2px;
-}
-
-.neighborhoods.arteries {
-    stroke: #984ea3;
-    stroke-width: 2px;
-}
-
-.streets.neighborhoods {
-    stroke: #4daf4a;
-    stroke-width: 2px;
-}
-
-.freeways.neighborhoods {
-    stroke: #4daf4a;
-    stroke-width: 2px;
-}
-
-.arteries.neighborhoods {
-    stroke: #4daf4a;
-    stroke-width: 2px;
-}
-
-.neighborhoods.neighborhoods {
-    stroke: #4daf4a;
-    stroke-width: 2px;
+.neighborhoods {
+  stroke: #045a8d;
+  stroke-width: 3px;
 }

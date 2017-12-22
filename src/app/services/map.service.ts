@@ -8,8 +8,8 @@ import IVehicle from '../models/Vehicle';
 @Injectable()
 export class MapService {
   private projection = geoMercator()
-    .scale(200000)
-    .center([-122.4194, 37.7749]);
+    .scale(275000)
+    .center([-122.465, 37.80]);
 
   private routeLineFunction = line<IPoint>()
     .x((d: IPoint) => {
@@ -76,8 +76,8 @@ export class MapService {
     buses
       .enter()
       .append('circle')
-      .attr('r', 5)
-      .attr('fill', '#f0027f')
+      .attr('r', 4)
+      .attr('fill', '#ff8c00')
       .attr('fill-opacity', '0.75')
       .attr('class', 'bus')
       .attr('data-route-tag', (d: IVehicle) => d.routeTag)

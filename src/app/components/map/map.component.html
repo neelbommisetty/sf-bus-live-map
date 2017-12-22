@@ -1,1 +1,5 @@
-<div class="map-holder"></div>
+<div class="wrapper">
+  <app-routes-dropdown *ngIf="routeData && routeData.length > 0" [routes]="routeData"></app-routes-dropdown>
+
+  <div class="map-holder"></div>
+</div>
