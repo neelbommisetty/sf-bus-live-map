@@ -13,7 +13,7 @@ export class NextbusApiService {
   }
 
   getBuses(routeTag?) {
-    const url = `${this.basePath}?a=sf-muni&command=vehicleLocations&t=${new Date().valueOf() - 900000}${routeTag ? `&r=${routeTag}` : ''}`;
+    const url = `${this.basePath}?a=sf-muni&command=vehicleLocations&t=${new Date().valueOf() - 60000}${routeTag ? `&r=${routeTag}` : ''}`;
     return this.http.get(url).toPromise();
   }
 }
