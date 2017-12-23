@@ -1,8 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { selection } from 'd3-selection';
 import { Injectable } from '@angular/core';
 import { geoMercator, geoPath } from 'd3-geo';
-import { select, line } from 'd3';
+import { select, line, json } from 'd3';
 
 import IPoint from '../models/Point';
 import IPathElement from '../models/Path';
@@ -19,8 +18,6 @@ export class MapService {
     .x((d: IPoint) => this.projection([d.lon, d.lat])[0])
     .y((d: IPoint) => this.projection([d.lon, d.lat])[1]);
 
-  constructor(private http: HttpClient) {}
-
   getProjection() {
     return this.projection;
   }
@@ -30,14 +27,21 @@ export class MapService {
   }
 
   getMapTypeData(type) {
-    const url = `assets/data/${type}.json`;
-    return this.http.get(url).toPromise();
+    const url = `../../assets/data/${type}.json`;
+    return new Promise((resolve, reject) => {
+      json(url, (err, data) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(data);
+      });
+    });
   }
 
-  drawMap(svg, json, className, path) {
+  drawMap(svg, data, className, path) {
     return svg
       .append('path')
-      .datum(json)
+      .datum(data)
       .attr('class', `map ${className}`)
       .style('fill', 'none')
       .attr('d', path);
@@ -54,12 +58,7 @@ export class MapService {
   drawBuses(rootSvg, busData) {
     rootSvg.selectAll('.bus').remove(); // clearing existing buses
 
-    const nonEmptyBuses = busData
-      .map(data => data.vehicle)
-      .filter(data => data) // removing empty objects
-      .reduce((prev, curr) => prev.concat(curr), []); // flatteing the array.
-
-    const buses = rootSvg.selectAll('.bus').data(nonEmptyBuses);
+    const buses = rootSvg.selectAll('.bus').data(busData);
 
     buses
       .enter()

@@ -5,6 +5,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppComponent } from './app.component';
 import { MapComponent } from './components/map/map.component';
@@ -20,7 +21,8 @@ import { RoutesDropdownComponent } from './components/routes-dropdown/routes-dro
     MatSelectModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatProgressSpinnerModule
   ],
   providers: [MapService, NextbusApiService],
   bootstrap: [AppComponent]

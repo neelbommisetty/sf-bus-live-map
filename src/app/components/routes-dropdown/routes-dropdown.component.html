@@ -1,5 +1,5 @@
 <mat-form-field>
-  <mat-select placeholder="Select Routes" multiple (selectionChange)="onSelectionChanged($event)">
+  <mat-select placeholder="Select Routes" multiple (selectionChange)="onSelectionChanged($event)" #dropdown>
     <mat-option *ngFor="let route of routes" [value]="route">{{route.title}}</mat-option>
   </mat-select>
 </mat-form-field>

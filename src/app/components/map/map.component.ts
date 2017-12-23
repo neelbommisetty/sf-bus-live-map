@@ -18,6 +18,7 @@ export class MapComponent implements AfterViewInit, OnDestroy {
   routeData: any;
   interval;
   selectedRoutes: any[] = [];
+  isLoading = true;
 
   constructor(
     private element: ElementRef,
@@ -30,15 +31,17 @@ export class MapComponent implements AfterViewInit, OnDestroy {
     this.rootSvg = this.mapService.getRootSvgSelection('map-holder');
     this.projection = this.mapService.getProjection();
     this.path = this.mapService.getPathWithProjection(this.projection);
-    this.renderMapWithData();
     this.nextBusApi.getRoutes()
       .then((res: any) => {
-          this.routeData = res.route;
+        this.routeData = res.route;
+        this.isLoading = false;
       })
       .catch((err) => {
         console.log(err);
+        this.isLoading = false;
         this.snackBar.open('Failed To Fetch Route Data. Try Again!');
       });
+    this.renderMapWithData();
   }
 
   async renderMapWithData() {
@@ -61,6 +64,7 @@ export class MapComponent implements AfterViewInit, OnDestroy {
     if (this.interval) {
       clearInterval(this.interval);
     }
+    this.isLoading = true;
     this.drawBusesForSelectedRoutes(routeTags); // initial drawing
     this.interval = setInterval(() => {
       this.drawBusesForSelectedRoutes(routeTags); // repeat every 15 secs
@@ -72,11 +76,24 @@ export class MapComponent implements AfterViewInit, OnDestroy {
     routeTags.forEach(tag => {
       busApiPromises.push(this.nextBusApi.getBuses(tag));
     });
+
     Promise.all(busApiPromises).then((busRes) => {
-        this.mapService.drawBuses(this.rootSvg, busRes);
+      this.isLoading = false;
+      const busData =  busRes
+        .map(data => data.vehicle)
+        .filter(data => data) // removing empty objects
+        .reduce((prev, curr) => prev.concat(curr), []); // flatteing the array.
+
+      if (busData.length <= 0) {
+        this.snackBar.open('No Buses Live For Select Route');
+        return;
+      }
+      this.mapService.drawBuses(this.rootSvg, busData);
+
     })
     .catch(err => {
       console.log(err);
+      this.isLoading = false;
       this.snackBar.open('Failed To Fetch Live Bus Data For Selected Routes. Try Again!');
     });
   }

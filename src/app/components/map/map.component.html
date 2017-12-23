@@ -5,3 +5,7 @@
   </header>
   <div class="map-holder"></div>
 </div>
+<div class="loader" *ngIf="isLoading">
+  <mat-progress-spinner color="primary" mode="indeterminate" >
+  </mat-progress-spinner>
+</div>
