@@ -1,35 +1,40 @@
+import { HttpClient } from '@angular/common/http';
 import { selection } from 'd3-selection';
 import { Injectable } from '@angular/core';
 import { geoMercator, geoPath } from 'd3-geo';
 import { select, line } from 'd3';
+
 import IPoint from '../models/Point';
 import IPathElement from '../models/Path';
 import IVehicle from '../models/Vehicle';
+
 @Injectable()
 export class MapService {
+
   private projection = geoMercator()
     .scale(275000)
-    .center([-122.465, 37.80]);
+    .center([-122.465, 37.8]);
 
   private routeLineFunction = line<IPoint>()
-    .x((d: IPoint) => {
-      return this.projection([d.lon, d.lat])[0];
-    })
-    .y((d: IPoint) => {
-      return this.projection([d.lon, d.lat])[1];
-    });
+    .x((d: IPoint) => this.projection([d.lon, d.lat])[0])
+    .y((d: IPoint) => this.projection([d.lon, d.lat])[1]);
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   getProjection() {
     return this.projection;
   }
+
   getPathWithProjection(projection) {
     return geoPath().projection(projection);
   }
 
+  getMapTypeData(type) {
+    const url = `assets/data/${type}.json`;
+    return this.http.get(url).toPromise();
+  }
+
   drawMap(svg, json, className, path) {
-    // const path = this.getPathWithProjection(this.projection);
     return svg
       .append('path')
       .datum(json)
@@ -46,44 +51,23 @@ export class MapService {
       .attr('height', '100%');
   }
 
-  renderRoute(svg, routeData) {
-    const tag = routeData.tag;
-    routeData.path.forEach((path: IPathElement) => {
-      svg
-        .append('path')
-        .attr('d', this.routeLineFunction(path.point))
-        .attr('class', 'route')
-        .attr('data-tag', tag)
-        .attr('stroke', `#${routeData.color}`)
-        .attr('stroke-width', 2)
-        .style('stroke-opacity', 0.5)
-        .attr('fill', 'none')
-        .append('svg:title')
-        .text(function(d) {
-          return routeData.title;
-        });
-    });
-  }
-
   drawBuses(rootSvg, busData) {
-    rootSvg.selectAll('.bus').remove();
+    rootSvg.selectAll('.bus').remove(); // clearing existing buses
 
-    const nonEmptyBuses = busData.filter(data => data);
+    const nonEmptyBuses = busData
+      .map(data => data.vehicle)
+      .filter(data => data) // removing empty objects
+      .reduce((prev, curr) => prev.concat(curr), []); // flatteing the array.
+
     const buses = rootSvg.selectAll('.bus').data(nonEmptyBuses);
 
-    // find it impossible to redraw and locate the pin
-    // use simple symbole circle instead
     buses
       .enter()
       .append('circle')
-      .attr('r', 4)
+      .attr('r', 5)
       .attr('fill', '#ff8c00')
       .attr('fill-opacity', '0.75')
       .attr('class', 'bus')
-      .attr('data-route-tag', (d: IVehicle) => d.routeTag)
-      .attr('data-dir-tag', (d: IVehicle) => d.dirTag)
-      .attr('data-heading', (d: IVehicle) => d.heading)
-      .attr('data-id', (d: IVehicle) => d.id)
       .attr('cx', (d: IVehicle) => this.projection([d.lon, d.lat])[0])
       .attr('cy', (d: IVehicle) => this.projection([d.lon, d.lat])[1]);
 

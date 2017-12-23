@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -7,13 +7,16 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./routes-dropdown.component.css']
 })
 export class RoutesDropdownComponent implements OnInit {
-  routeForm= new FormControl();
 
   @Input('routes') routes;
+  @Output('routeSelected') routeSelected: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  onSelectionChanged(e) {
+    this.routeSelected.emit(e);
+  }
 }
