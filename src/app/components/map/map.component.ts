@@ -19,6 +19,7 @@ export class MapComponent implements AfterViewInit, OnDestroy {
   interval;
   selectedRoutes: any[] = [];
   isLoading = true;
+  isMapLoading = true;
 
   constructor(
     private element: ElementRef,
@@ -35,6 +36,9 @@ export class MapComponent implements AfterViewInit, OnDestroy {
       .then((res: any) => {
         this.routeData = res.route;
         this.isLoading = false;
+        this.nextBusApi.getBuses().then((busRes: any) => {
+          this.mapService.drawBuses(this.rootSvg, busRes.vehicle);
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -45,17 +49,19 @@ export class MapComponent implements AfterViewInit, OnDestroy {
   }
 
   async renderMapWithData() {
+    this.isMapLoading = true;
     const streetsData = await this.mapService.getMapTypeData('streets');
     this.mapService.drawMap(this.rootSvg, streetsData, 'streets', this.path);
-
+    this.isMapLoading = true;
     const arteriesData = await this.mapService.getMapTypeData('arteries');
     this.mapService.drawMap(this.rootSvg, arteriesData, 'arteries', this.path);
-
+    this.isMapLoading = true;
     const freewaysData = await this.mapService.getMapTypeData('freeways');
     this.mapService.drawMap(this.rootSvg, freewaysData, 'freeways', this.path);
-
+    this.isMapLoading = true;
     const neighborhoodsData = await this.mapService.getMapTypeData('neighborhoods');
     this.mapService.drawMap(this.rootSvg, neighborhoodsData, 'neighborhoods', this.path);
+    this.isMapLoading = false;
   }
 
   onRoutesSelected(e) {
@@ -86,7 +92,6 @@ export class MapComponent implements AfterViewInit, OnDestroy {
 
       if (busData.length <= 0) {
         this.snackBar.open('No Buses Live For Select Route');
-        return;
       }
       this.mapService.drawBuses(this.rootSvg, busData);
 
