@@ -39,6 +39,11 @@ export class MapComponent implements AfterViewInit, OnDestroy {
         this.nextBusApi.getBuses().then((busRes: any) => {
           this.mapService.drawBuses(this.rootSvg, busRes.vehicle);
         });
+        this.interval = setInterval(() => {
+          this.nextBusApi.getBuses().then((busRes: any) => {
+            this.mapService.drawBuses(this.rootSvg, busRes.vehicle);
+          });
+        }, 15000);
       })
       .catch((err) => {
         console.log(err);
