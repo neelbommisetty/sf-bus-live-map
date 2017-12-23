@@ -9,12 +9,11 @@ import { FormControl } from '@angular/forms';
 export class RoutesDropdownComponent implements OnInit {
 
   @Input('routes') routes;
-  @Output('routeSelected') routeSelected: EventEmitter<any> = new EventEmitter<any>();
+  @Output('routeSelected') routeSelected = new EventEmitter<any>();
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   onSelectionChanged(e) {
     this.routeSelected.emit(e);

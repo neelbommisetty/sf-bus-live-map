@@ -9,18 +9,10 @@
 html,
 body {
   height: 100%;
-  /* background-color: #c7dae7; */
 }
 
-/* Space out content a bit */
 body {
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-
-.map-holder {
-  background-color: #ffffff;
-  height: 100%;
+  padding: 20px;
 }
 
 .streets,

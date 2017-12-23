@@ -1,4 +1,7 @@
 <div class="wrapper">
-  <app-routes-dropdown *ngIf="routeData && routeData.length > 0" [routes]="routeData" (routeSelected)="onRoutesSelected($event)"></app-routes-dropdown>
+  <header class="header">
+      <h1 class="header-title">San Francisco Live Bus Tracker</h1>
+      <app-routes-dropdown *ngIf="routeData && routeData.length > 0" [routes]="routeData" (routeSelected)="onRoutesSelected($event)"></app-routes-dropdown>
+  </header>
   <div class="map-holder"></div>
 </div>

@@ -1,11 +1,7 @@
 import { Component, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
-import { flatMap, tap } from 'rxjs/operators';
-import { interval } from 'rxjs/observable/interval';
-import { json, GeoProjection, GeoPath } from 'd3';
+import { GeoProjection, GeoPath } from 'd3';
 import { MatSnackBar } from '@angular/material';
-import { takeUntil } from 'rxjs/operators/takeUntil';
 import { Selection } from 'd3-selection';
-import { Subject } from 'rxjs/Subject';
 
 import { NextbusApiService } from '../../services/nextbus-api.service';
 import { MapService } from '../../services/map.service';
@@ -35,14 +31,14 @@ export class MapComponent implements AfterViewInit, OnDestroy {
     this.projection = this.mapService.getProjection();
     this.path = this.mapService.getPathWithProjection(this.projection);
     this.renderMapWithData();
-    this.nextBusApi
-      .getRoutes()
+    this.nextBusApi.getRoutes()
       .then((res: any) => {
           this.routeData = res.route;
-        }, (err) => {
-          console.log(err);
-          this.snackBar.open('Failed To Fetch Route Data. Try Again!');
-        });
+      })
+      .catch((err) => {
+        console.log(err);
+        this.snackBar.open('Failed To Fetch Route Data. Try Again!');
+      });
   }
 
   async renderMapWithData() {
@@ -55,7 +51,7 @@ export class MapComponent implements AfterViewInit, OnDestroy {
     const freewaysData = await this.mapService.getMapTypeData('freeways');
     this.mapService.drawMap(this.rootSvg, freewaysData, 'freeways', this.path);
 
-    const neighborhoodsData = await this.mapService.getMapTypeData('freeways');
+    const neighborhoodsData = await this.mapService.getMapTypeData('neighborhoods');
     this.mapService.drawMap(this.rootSvg, neighborhoodsData, 'neighborhoods', this.path);
   }
 
@@ -65,9 +61,9 @@ export class MapComponent implements AfterViewInit, OnDestroy {
     if (this.interval) {
       clearInterval(this.interval);
     }
-    this.drawBusesForSelectedRoutes(routeTags);
+    this.drawBusesForSelectedRoutes(routeTags); // initial drawing
     this.interval = setInterval(() => {
-      this.drawBusesForSelectedRoutes(routeTags);
+      this.drawBusesForSelectedRoutes(routeTags); // repeat every 15 secs
     }, 15000);
   }
 
