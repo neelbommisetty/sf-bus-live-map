@@ -1,10 +1,9 @@
-import { selection } from 'd3-selection';
 import { Injectable } from '@angular/core';
-import { geoMercator, geoPath } from 'd3-geo';
 import { select, line, json } from 'd3';
+import { geoMercator, geoPath } from 'd3-geo';
+import { selection } from 'd3-selection';
 
 import IPoint from '../models/Point';
-import IPathElement from '../models/Path';
 import IVehicle from '../models/Vehicle';
 
 @Injectable()

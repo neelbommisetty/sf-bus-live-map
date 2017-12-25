@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class NextbusApiService {
+
   private basePath = 'http://webservices.nextbus.com/service/publicJSONFeed';
   private agency = 'sf-muni';
   constructor(private http: HttpClient) {}

@@ -13,8 +13,6 @@ export class RoutesDropdownComponent implements OnInit {
   @Output('routeSelected') routeSelected = new EventEmitter<any>();
   @ViewChild('dropdown') dropdown: MatSelect;
 
-  constructor() { }
-
   ngOnInit() { }
 
   onSelectionChanged(e) {

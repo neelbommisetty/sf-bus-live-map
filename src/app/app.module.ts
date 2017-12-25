@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSelectModule } from '@angular/material/select';
-import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -19,7 +18,6 @@ import { RoutesDropdownComponent } from './components/routes-dropdown/routes-dro
     BrowserModule,
     HttpClientModule,
     MatSelectModule,
-    ReactiveFormsModule,
     BrowserAnimationsModule,
     MatSnackBarModule,
     MatProgressSpinnerModule
